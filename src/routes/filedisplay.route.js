@@ -2,8 +2,9 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import { PaperClipIcon } from '@heroicons/react/20/solid'
-import {Card} from "@mui/material";
 import fileDownload from "js-file-download";
+import API_URL from "../constants";
+import {Toast} from "flowbite-react";
 
 function getDateFormat(time) {
     const date = new Date(time);
@@ -17,7 +18,7 @@ export default function FileDisplayRoute() {
 
     useEffect(() => {
         if (file === null) {
-            axios.get("http://192.168.1.151:8080/api/v1/file_info?fileSHA512Digest=" + params.digest)
+            axios.get("http://" + API_URL + "/api/v1/file_info?fileSHA512Digest=" + params.digest)
                 .then(res => {
                     console.log(res.data)
                     setFile(res.data)

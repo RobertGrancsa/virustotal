@@ -3,6 +3,7 @@ import LinkComponent from "../components/link.component";
 import {useCookies} from "react-cookie";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import API_URL from "../constants";
 
 
 const name = [
@@ -37,7 +38,7 @@ export default function LinksRoute() {
 
     useEffect(() => {
         if (links === null) {
-            axios.get("http://192.168.1.151:8080/api/v1/user_urls?userEmail=" + cookies.userToken.email)
+            axios.get("http://" + API_URL + "/api/v1/user_urls?userEmail=" + cookies.userToken.email)
                 .then(res => {
                     console.log(res.data);
                     setLinks(res.data);

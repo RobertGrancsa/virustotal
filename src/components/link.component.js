@@ -15,6 +15,7 @@ import { Menu, Transition } from '@headlessui/react'
 import axios from "axios";
 import {useCookies} from "react-cookie";
 import {Link} from "react-router-dom";
+import API_URL from "../constants";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -35,7 +36,7 @@ export default function LinkComponent({element, removeFunc}) {
             urlAddress: element.addr
         }
 
-        axios.post("http://192.168.1.151:8080/api/v1/delete_url", file, {headers: {
+        axios.post("http://" + API_URL + "/api/v1/delete_url", file, {headers: {
             'Access-Control-Allow-Origin' : '*',
             'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             'AccessToken' : cookies.userToken.token,

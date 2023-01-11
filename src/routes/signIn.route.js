@@ -1,25 +1,24 @@
 import { LockClosedIcon } from '@heroicons/react/20/solid'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import API_URL from "../constants";
+import {useState} from "react";
 
 export default function SignInRoute() {
     const { register, handleSubmit, formState: { errors }  } = useForm();
 
     const [cookies, setCookie] = useCookies(["userToken"]);
-
-    console.log(cookies.userToken)
-    if (cookies.userToken === undefined) {
-        console.log("No user")
-    }
+    const [notification, setNotification] = useState({message: null, isError: null});
+    let navigate = useNavigate();
 
     const submitForm = (data) => {
         if (errors.toString().length !== 0) {
-            console.log("Error" + errors)
+            console.log(errors)
         }
 
-        axios.post("http://192.168.1.151:8080/api/v1/login", data)
+        axios.post("http://" + API_URL + "/api/v1/login", data)
             .then(res => {
                 console.log(res.data);
                 setCookie("userToken", {
@@ -28,11 +27,21 @@ export default function SignInRoute() {
                 }, {
                     path: "/"
                 });
+                setNotification({
+                    message: res.data,
+                    isError: false,
+                })
 
-                window.location.replace("/upload")
+                setTimeout(function() {
+                    window.location.replace("/upload");
+                }, 1000);
             })
             .catch((error) => {
                 console.log(error);
+                setNotification({
+                    message: error.response.data.statusMessage.substring(8),
+                    isError: true
+                })
             })
     }
 
@@ -124,6 +133,34 @@ export default function SignInRoute() {
                             </button>
                         </div>
                     </form>
+                    { notification.isError === false && <div
+                        className="flex p-4 mb-4 text-sm text-blue-700 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+                        role="alert">
+                        <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor"
+                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                        <span className="sr-only">Info</span>
+                        <div>
+                            <span className="font-medium"></span> {notification.message}
+                        </div>
+                    </div> }
+                    { notification.isError === true && <div
+                        className="flex p-4 mb-4 text-sm text-red-700 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+                        role="alert">
+                        <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor"
+                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                        <span className="sr-only">Info</span>
+                        <div>
+                            <span className="font-medium">Error!</span> {notification.message}
+                        </div>
+                    </div> }
                 </div>
                 <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
                     <svg

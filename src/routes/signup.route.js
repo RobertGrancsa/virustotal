@@ -1,15 +1,17 @@
 import { LockClosedIcon } from '@heroicons/react/20/solid'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import {useCookies} from "react-cookie";
 import {useState} from "react";
+import API_URL from "../constants";
 
 export default function SignUpRoute() {
     const { register, handleSubmit, formState: { errors }  } = useForm();
     const [cookies, setCookie] = useCookies(["userToken"]);
 
     const [notification, setNotification] = useState({message: null, isError: null});
+    let navigate = useNavigate();
 
     const submitForm = (data) => {
         if (errors.toString().length !== 0) {
@@ -18,7 +20,7 @@ export default function SignUpRoute() {
 
         console.log(data)
 
-        axios.post("http://192.168.1.151:8080/api/v1/signup", data)
+        axios.post("http://" + API_URL + "/api/v1/signup", data)
             .then(res => {
                 console.log(res.data);
 
@@ -34,7 +36,7 @@ export default function SignUpRoute() {
 
                 console.log(login)
 
-                axios.post("http://192.168.1.151:8080/api/v1/login", login, { headers: {
+                axios.post("http://" + API_URL + "/api/v1/login", login, { headers: {
                         'Access-Control-Allow-Origin' : '*',
                         'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS'
                     }})

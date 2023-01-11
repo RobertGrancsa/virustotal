@@ -2,6 +2,7 @@ import {useForm} from "react-hook-form";
 import {useState} from "react";
 import axios from "axios";
 import {useCookies} from "react-cookie";
+import API_URL from "../constants";
 
 
 export default function UploadlinkComponent() {
@@ -23,6 +24,10 @@ export default function UploadlinkComponent() {
         if (link.includes("http://")) {
             console.log("has http")
             link = link.substring(7)
+        }
+        let index = link.indexOf("/");
+        if (index !== -1) {
+            link = link.substring(0, index)
         }
 
         setFormData({url: link})
@@ -54,7 +59,7 @@ export default function UploadlinkComponent() {
 
         console.log(sendData)
 
-        axios.post("http://192.168.1.151:8080/api/v1/add_url", sendData, { headers: {
+        axios.post("http://" + API_URL + "/api/v1/add_url", sendData, { headers: {
                 'Access-Control-Allow-Origin' : '*',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
                 'AccessToken' : token,

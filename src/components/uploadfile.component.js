@@ -4,6 +4,8 @@ import {useCookies} from "react-cookie";
 import {useState} from "react";
 import {sha512} from "js-sha512";
 import {useNavigate} from "react-router-dom";
+import API_URL from "../constants";
+import {Spinner} from "flowbite-react";
 
 
 export default function UploadfileComponent() {
@@ -55,7 +57,7 @@ export default function UploadfileComponent() {
 
             console.log(sendData)
 
-            axios.post("http://192.168.1.151:8080/api/v1/add_file", sendData, { headers: {
+            axios.post("http://" + API_URL + "/api/v1/add_file", sendData, { headers: {
                     'Access-Control-Allow-Origin' : '*',
                     'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
                     'AccessToken' : token,
@@ -70,7 +72,7 @@ export default function UploadfileComponent() {
                     setTimeout(function() {
                         let digest = sha512(sendData.binData).toUpperCase();
                         navigate("/files/" + digest);
-                    }, 1000);
+                    }, 5000);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -86,10 +88,10 @@ export default function UploadfileComponent() {
 
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="shadow sm:overflow-hidden sm:rounded-md">
+            <div className="shadow sm:overflow-hidden sm:rounded-md mb-4">
                 <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
                     <div className="grid grid-cols-3 gap-6">
-                        <div className="col-span-3 sm:col-span-2">
+                        <div className="col-span-3 sm:col-span-1">
                             <label htmlFor="company-website" className="block text-sm font-medium text-gray-700">
                                 Description
                             </label>
@@ -104,26 +106,35 @@ export default function UploadfileComponent() {
                                 />
                             </div>
                         </div>
+                        <div className="items-start">
+                            <label htmlFor="company-website" className="block text-sm font-medium text-gray-700">
+                                Description
+                            </label>
+                            <div className="flex h-5 items-center">
+                                <input
+                                    id="comments"
+                                    name="comments"
+                                    type="checkbox"
+                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                />
+                            </div>
+                            <div className="ml-3 text-sm">
+                                <label htmlFor="comments" className="font-medium text-gray-700">
+                                    Comments
+                                </label>
+                                <p className="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700">File upload</label>
                         <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
                             <div className="space-y-1 text-center">
-                                <svg
-                                    className="mx-auto h-12 w-12 text-gray-400"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 48 48"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                        strokeWidth={2}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mx-auto w-14 h-14">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
                                 </svg>
+
                                 <div className="flex text-sm text-gray-600">
                                     <label
                                         htmlFor="file-upload"
@@ -147,35 +158,36 @@ export default function UploadfileComponent() {
                         Send
                     </button>
                 </div>
-                { notification.isError === false && <div
-                    className="flex p-4 mb-4 text-sm text-blue-700 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
-                    role="alert">
-                    <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor"
-                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                              clip-rule="evenodd"></path>
-                    </svg>
-                    <span className="sr-only">Info</span>
-                    <div>
-                        <span className="font-medium"></span> {notification.message}
-                    </div>
-                </div> }
-                { notification.isError === true && <div
-                    className="flex p-4 mb-4 text-sm text-red-700 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
-                    role="alert">
-                    <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor"
-                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                              clip-rule="evenodd"></path>
-                    </svg>
-                    <span className="sr-only">Info</span>
-                    <div>
-                        <span className="font-medium">Error!</span> {notification.message}
-                    </div>
-                </div> }
             </div>
+            { notification.isError === false && <div
+                className="flex p-4 mb-4 text-sm text-blue-700 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+                role="alert">
+                <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor"
+                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                          clip-rule="evenodd"></path>
+                </svg>
+                <span className="sr-only">Info</span>
+                <div>
+                    <span className="font-medium"></span> {notification.message}
+                </div>
+                <Spinner className="ml-8" aria-label="Default status example" />
+            </div> }
+            { notification.isError === true && <div
+                className="flex p-4 mb-4 text-sm text-red-700 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+                role="alert">
+                <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor"
+                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                          clip-rule="evenodd"></path>
+                </svg>
+                <span className="sr-only">Info</span>
+                <div>
+                    <span className="font-medium">Error!</span> {notification.message}
+                </div>
+            </div> }
         </form>
     )
 }

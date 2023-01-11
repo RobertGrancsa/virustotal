@@ -1,10 +1,8 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import { PaperClipIcon } from '@heroicons/react/20/solid'
-import {Card} from "@mui/material";
-import fileDownload from "js-file-download";
 import {Button} from "@material-tailwind/react";
+import API_URL from "../constants";
 
 function getDateFormat(time) {
     const date = new Date(time);
@@ -18,7 +16,7 @@ export default function LinkDisplayRoute() {
 
     useEffect(() => {
         if (link === null) {
-            axios.get("http://192.168.1.151:8080/api/v1/url_info?urlAddress=" + params.addr)
+            axios.get("http://" + API_URL + "/api/v1/url_info?urlAddress=" + params.addr)
                 .then(res => {
                     console.log(res.data)
                     setLink(res.data)
@@ -87,17 +85,17 @@ export default function LinkDisplayRoute() {
                         <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt className="text-sm font-medium text-gray-500">Attachments</dt>
                             <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                <ul role="list" className="rounded-md">
+                                <div role="list" className="rounded-md">
                                     <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                         <div className="flex w-0 flex-1 items-center">
                                         </div>
-                                        <div className="ml-4 flex-shrink-0">
-                                            <Button href={link.addr} className="font-medium text-indigo-100 hover:text-indigo-900 w-full">
+                                        <a href={"//" + link.addr} className="ml-4 flex-shrink-0">
+                                            <Button type="button" className="font-medium text-indigo-100 hover:text-indigo-900 w-full">
                                                 Open link
                                             </Button>
-                                        </div>
+                                        </a>
                                     </li>
-                                </ul>
+                                </div>
                             </dd>
                         </div>
                     </dl>

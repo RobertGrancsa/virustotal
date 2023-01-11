@@ -4,6 +4,8 @@ import {useCookies} from "react-cookie";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import FileComponent from "../components/file.component";
+import API_URL from "../constants";
+import {Toast} from "flowbite-react";
 
 
 const name = [
@@ -38,7 +40,7 @@ export default function FilesRoute() {
 
     useEffect(() => {
         if (files === null) {
-            axios.get("http://192.168.1.151:8080/api/v1/user_files?userEmail=" + cookies.userToken.email)
+            axios.get("http://" + API_URL + "/api/v1/user_files?userEmail=" + cookies.userToken.email)
                 .then(res => {
                     console.log(res.data);
                     setFiles(res.data);
@@ -87,13 +89,31 @@ export default function FilesRoute() {
     }
 
     return (
-        <div className="flex items-center justify-center">
-            <Card className="lg:px-10 md:px-4 pt-5 lg:w-2/3 mt-10 pb-10 md:w-1">
-                <h2 className="px-5 mt-6 text-left text-4xl font-bold tracking-tight text-gray-900">
-                    List of files
-                </h2>
-                { getLinks() }
-            </Card>
-        </div>
+        <>
+
+            <div className="flex items-center justify-center">
+                <Card className="lg:px-10 md:px-4 pt-5 lg:w-2/3 mt-10 pb-10 md:w-1">
+                    <h2 className="px-5 mt-6 text-left text-4xl font-bold tracking-tight text-gray-900">
+                        List of files
+                    </h2>
+                    { getLinks() }
+                </Card>
+            </div>
+            <div className="flex lg:justify-end md:fixed ">
+            <Toast>
+                <div className="text-sm font-normal">
+                    Conversation archived.
+                </div>
+                <div className="ml-auto flex items-center space-x-2">
+                    <button
+                        className="rounded-lg p-1.5 text-sm font-medium text-blue-600 hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-700"
+                    >
+                        Undo
+                    </button>
+                    <Toast.Toggle />
+                </div>
+            </Toast>
+            </div>
+        </>
     )
 }
