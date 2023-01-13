@@ -29,7 +29,7 @@ export default function UploadRoute() {
 
 
     return (
-        <div className="flex min-h-full items-center justify-center lg:h-screen md:-translate-x-10">
+        <div className="flex  items-center justify-center lg:h-screen md:mt-10">
             <Card className="md:mt-8 w-3/4 p-8 transition-all duration-100 delay-75">
                 <Tabs value="File">
                     <TabsHeader>

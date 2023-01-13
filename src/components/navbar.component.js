@@ -224,11 +224,12 @@ export default function NavbarComponent() {
                                         </p>
                                     </div>
                                     <div className="-my-6 divide-y divide-gray-500/10">
-                                        <p to="/" onClick={logout}
+                                        <Link to="/" onClick={logout}
 
-                                           className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-700 hover:bg-gray-400/10"
+                                           className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-700 hover:text-red-400/10"
                                         >
-                                        </p>
+                                            Delete Account
+                                        </Link>
                                     </div>
                                     <div className="-my-6 divide-y divide-gray-500/10">
                                         <Link to="/" onClick={logout}

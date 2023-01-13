@@ -36,7 +36,9 @@ export default function FilesRoute() {
 
     const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
 
-    const [files, setFiles] = useState(null)
+    const [files, setFiles] = useState(null);
+
+    const [notify, setNotify] = useState({fileName: null});
 
     useEffect(() => {
         if (files === null) {
@@ -52,10 +54,16 @@ export default function FilesRoute() {
     })
 
     const removeItem = (item) => {
-        let list = files.filter(function(ele){
-            return ele !== item;
-        });
-        setFiles(list);
+        setTimeout(() => {
+            if (notify.fileName === null) {
+                return;
+            }
+            let list = files.filter(function(ele){
+                return ele !== item;
+            });
+
+            setFiles(list);
+        }, 5000)
     }
 
     const getLinks = () => {
@@ -84,7 +92,7 @@ export default function FilesRoute() {
         }
 
         return files.map(elem => {
-            return <FileComponent key={elem.toString()} element={elem} removeFunc={removeItem}/>
+            return <FileComponent key={elem.toString()} element={elem} removeFunc={removeItem} notification={notify}/>
         })
     }
 
@@ -99,7 +107,7 @@ export default function FilesRoute() {
                     { getLinks() }
                 </Card>
             </div>
-            <div className="flex lg:justify-end md:fixed ">
+            <div className={"flex lg:justify-end" + notify.fileName === null ? " ": " hidden"}>
             <Toast>
                 <div className="text-sm font-normal">
                     Conversation archived.
