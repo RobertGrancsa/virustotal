@@ -5,9 +5,7 @@ import {
     CalendarIcon,
     BugAntIcon,
     ChevronDownIcon,
-    CurrencyDollarIcon,
     LinkIcon,
-    MapPinIcon,
     PencilIcon,
     ArchiveBoxXMarkIcon,
 } from '@heroicons/react/20/solid'

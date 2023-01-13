@@ -106,25 +106,6 @@ export default function UploadfileComponent() {
                                 />
                             </div>
                         </div>
-                        <div className="items-start">
-                            <label htmlFor="company-website" className="block text-sm font-medium text-gray-700">
-                                Description
-                            </label>
-                            <div className="flex h-5 items-center">
-                                <input
-                                    id="comments"
-                                    name="comments"
-                                    type="checkbox"
-                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                            </div>
-                            <div className="ml-3 text-sm">
-                                <label htmlFor="comments" className="font-medium text-gray-700">
-                                    Comments
-                                </label>
-                                <p className="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-                            </div>
-                        </div>
                     </div>
 
                     <div>

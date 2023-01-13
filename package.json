@@ -16,7 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "autoprefixer": "^10.4.13",
     "axios": "^1.2.2",
-    "flowbite": "^1.6.0",
+    "flowbite": "^1.6.2",
     "flowbite-react": "^0.3.7",
     "js-file-download": "^0.4.12",
     "js-sha512": "^0.8.0",
@@ -28,6 +28,7 @@
     "react-hook-form": "^7.41.5",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
+    "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.6",
     "twin.macro": "^3.1.0",
     "web-vitals": "^2.1.4"

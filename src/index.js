@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { CookiesProvider } from "react-cookie";
 
 import { ThemeProvider } from "@material-tailwind/react";
+import {BrowserRouter} from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const customTheme = {}
@@ -13,7 +14,9 @@ root.render(
   <React.StrictMode>
       <ThemeProvider value={customTheme}>
           <CookiesProvider>
+              <BrowserRouter>
               <App />
+              </BrowserRouter>
           </CookiesProvider>
       </ThemeProvider>
   </React.StrictMode>

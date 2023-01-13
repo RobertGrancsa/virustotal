@@ -21,10 +21,10 @@ export default function HomeRoute() {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">
+                            <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl dark:text-gray-300">
                                 Virus Total
                             </h1>
-                            <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
+                            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 sm:text-center">
                                 Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt
                                 amet fugiat veniam occaecat fugiat aliqua.
                             </p>
