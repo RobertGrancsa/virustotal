@@ -4,7 +4,7 @@ import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
 import {Dialog as DialogPhone} from "@headlessui/react";
 import {useCookies} from "react-cookie";
 import {Avatar} from "@mui/material";
-import {Dropdown, Navbar} from "flowbite-react";
+import {Dropdown} from "flowbite-react";
 import axios from "axios";
 import API_URL from "../constants";
 import {
@@ -165,7 +165,7 @@ export default function NavbarComponent() {
                     </div>}
                 </nav>
                 <DialogPhone as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-                    <DialogPhone.Panel focus="true" className="fixed inset-0 z-10 overflow-y-auto bg-white px-6 py-6 lg:hidden">
+                    <DialogPhone.Panel focus="true" className="fixed inset-0 z-10 overflow-y-auto bg-white dark:bg-gray-800 px-6 py-6 lg:hidden">
                         <div className="flex h-9 items-center justify-between">
                             <div className="flex">
                                 <a href="#" className="-m-1.5 p-1.5">
@@ -198,7 +198,7 @@ export default function NavbarComponent() {
                                                 ({color: isActive ? '#000' : '#606466'})
                                             }
                                             onClick={() => setMobileMenuOpen(false)}
-                                            className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
+                                            className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 dark:text-gray-400 hover:bg-gray-400/10"
                                         >
                                             {item.name}
                                         </NavLink>
@@ -216,24 +216,25 @@ export default function NavbarComponent() {
 
                                 {cookies.userToken !== undefined && <div className="space-y-2 py-6">
                                     <div className="">
-                                        <p to="/" onClick={logout}
+                                        <p onClick={logout}
 
-                                           className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-700 hover:bg-gray-400/10"
+                                           className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-700 dark:text-gray-400 hover:bg-gray-400/10"
                                         >
                                             {cookies.userToken.email}
                                         </p>
                                     </div>
                                     <div className="-my-6 divide-y divide-gray-500/10">
-                                        <p to="/" onClick={logout}
+                                        <button onClick={handleOpen}
 
-                                           className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-700 hover:bg-gray-400/10"
+                                           className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 dark:text-gray-400 hover:bg-gray-400/10"
                                         >
-                                        </p>
+                                            Delete account
+                                        </button>
                                     </div>
                                     <div className="-my-6 divide-y divide-gray-500/10">
                                         <Link to="/" onClick={logout}
 
-                                              className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
+                                              className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 dark:text-gray-400 hover:bg-gray-400/10"
                                         >
                                             Log out
                                         </Link>

@@ -11,7 +11,6 @@ export default function SignUpRoute() {
     const [cookies, setCookie] = useCookies(["userToken"]);
 
     const [notification, setNotification] = useState({message: null, isError: null});
-    let navigate = useNavigate();
 
     const submitForm = (data) => {
         if (errors.toString().length !== 0) {
@@ -55,7 +54,7 @@ export default function SignUpRoute() {
                     .catch((error) => {
                         console.log(error);
                         setNotification({
-                            message: error.message,
+                            message: error.response.data.statusMessage.substring(8),
                             isError: true
                         })
                     })
@@ -63,7 +62,7 @@ export default function SignUpRoute() {
             .catch((error) => {
                 console.log(error);
                 setNotification({
-                    message: error.message,
+                    message: error.response.data.statusMessage.substring(8),
                     isError: true
                 })
             })

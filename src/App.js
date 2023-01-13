@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Link, Outlet, Route, Routes, useLocation} from "react-router-dom";
 import HomeRoute from "./routes/home.route";
 import NavbarComponent from "./components/navbar.component";
 import FooterComponent from "./components/footer.component";
 import SignInRoute from "./routes/signIn.route";
-import {useCookies} from "react-cookie";
 import SignUpRoute from "./routes/signup.route";
 import LinksRoute from "./routes/links.route";
 import UploadRoute from "./routes/upload.route";
 import FilesRoute from "./routes/files.route";
 import FileDisplayRoute from "./routes/filedisplay.route";
 import LinkDisplayRoute from "./routes/urldisplay.route";
+import {
+    TransitionGroup,
+    CSSTransition, SwitchTransition
+} from "react-transition-group";
 
 function App() {
-    const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
+    let location = useLocation();
 
     return (
-      <div className="isolate bg-white">
+      <div className="isolate bg-white dark:bg-gray-800">
           <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
               <svg
                   className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
@@ -45,22 +47,62 @@ function App() {
                   </defs>
               </svg>
           </div>
-          <BrowserRouter>
+
               <NavbarComponent/>
-              <Routes>
-                  <Route path="/" element={<HomeRoute />} />
-                  <Route path="/signin" element={<SignInRoute />} />
-                  <Route path="/signup" element={<SignUpRoute />} />
-                  <Route path="/upload" element={<UploadRoute />} />
-                  <Route path="/files" element={<FilesRoute />} />
-                  <Route path="/files/:digest" element={<FileDisplayRoute />} />
-                  <Route path="/links" element={<LinksRoute />} />
-                  <Route path="/links/:addr" element={<LinkDisplayRoute />} />
-              </Routes>
+                      <Routes>
+                          <Route element={<AnimationLayout />}>
+                              <Route path="/" element={<HomeRoute />} />
+                              <Route path="/signin" element={<SignInRoute />} />
+                              <Route path="/signup" element={<SignUpRoute />} />
+                              <Route path="/upload" element={<UploadRoute />} />
+                              <Route path="/files" element={<FilesRoute />} />
+                              <Route path="/files/:digest" element={<FileDisplayRoute />} />
+                              <Route path="/links" element={<LinksRoute />} />
+                              <Route path="/links/:addr" element={<LinkDisplayRoute />} />
+                              <Route path="*" element={<Func404 />} />
+                          </Route>
+                      </Routes>
           <FooterComponent/>
-          </BrowserRouter>
       </div>
     );
 }
+
+function Func404() {
+    return(
+        <section className="dark:bg-gray-900">
+            <div className="py-8 px-4 min-h-full mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+                <div className="mx-auto max-w-screen-sm text-center min-h-full ">
+                    <h1 className="mb-4 text-7xl tracking-tight font-extrabold lg:text-9xl text-blue-600 dark:text-blue-500">404</h1>
+                    <p className="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">Something's
+                        missing.</p>
+                    <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">Sorry, we can't find that
+                        page. You'll find lots to explore on the home page. </p>
+                    <Link to="/"
+                       className="inline-flex text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-900 my-4">Back
+                        to Homepage</Link>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+const AnimationLayout = () => {
+    const { pathname } = useLocation();
+    // const nodeRef =
+
+    return (
+        <SwitchTransition>
+            <CSSTransition
+                key={pathname}
+                // nodeRef={nodeRef}
+                timeout={300}
+                classNames="page"
+                unmountOnExit
+            >
+                <Outlet />
+            </CSSTransition>
+        </SwitchTransition>
+    );
+};
 
 export default App;
