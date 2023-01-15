@@ -31,29 +31,15 @@ export default function FileComponent({element, removeFunc}) {
     const [cookies, setCookie] = useCookies(["userToken"]);
 
     const deleteItem = () => {
-        const file = {
-            userEmail: cookies.userToken.email,
-            fileSHA512Digest: element.digest
-        }
 
-        axios.post("http://" + API_URL + "/api/v1/delete_file", file, {headers: {
-                'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-                'AccessToken' : cookies.userToken.token,
-            }})
-            .then(res => {
-                console.log(res.data);
-                removeFunc(element)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+
+
     }
 
     return (
         <div className="lg:flex lg:items-center lg:justify-between m-5">
             <div className="min-w-0 flex-1">
-                <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                <h2 className="text-2xl font-bold leading-7 text-gray-900 dark:text-gray-200 sm:truncate sm:text-3xl sm:tracking-tight">
                     {element.fileName}
                 </h2>
                 <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
@@ -78,9 +64,9 @@ export default function FileComponent({element, removeFunc}) {
         <span className="hidden sm:block">
           <button
               type="button"
-              className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="inline-flex items-center rounded-md border dark:text-gray-200 border-gray-300 dark:border-gray-900 bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
-            <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+            <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500 dark:text-gray-200" aria-hidden="true" />
             Edit
           </button>
         </span>
@@ -89,9 +75,9 @@ export default function FileComponent({element, removeFunc}) {
           <Link
               to={"/files/" + element.digest}
               type="button"
-              className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="inline-flex items-center rounded-md border dark:text-gray-200 border-gray-300 dark:border-gray-900 bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
-            <LinkIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+            <LinkIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500 dark:text-gray-200" aria-hidden="true" />
             View
           </Link>
         </span>
@@ -99,7 +85,7 @@ export default function FileComponent({element, removeFunc}) {
                 <span className="sm:ml-3">
           <button
 
-              onClick={deleteItem}
+              onClick={() => removeFunc(element)}
               type="button"
               className="inline-flex items-center rounded-md border border-transparent bg-red-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-900 focus:ring-offset-2"
           >
@@ -139,7 +125,7 @@ export default function FileComponent({element, removeFunc}) {
                                 {({ active }) => (
                                     <Link
                                         to={"/files/" + element.digest}
-                                        onClick={deleteItem}
+                                        onClick={() => removeFunc(element)}
                                         className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                     >
                                         View

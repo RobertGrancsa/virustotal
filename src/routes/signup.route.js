@@ -78,10 +78,10 @@ export default function SignUpRoute() {
                             src="logo.png"
                             alt="VirusTotal"
                         />
-                        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200">
                             Create a new account
                         </h2>
-                        <p className="mt-2 text-center text-sm text-gray-600">
+                        <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
                             Or{' '}
                             <Link to="/signin" className="font-medium text-indigo-600 hover:text-indigo-500">
                                 sign in
@@ -101,7 +101,7 @@ export default function SignUpRoute() {
                                     type="email"
                                     autoComplete="email"
                                     required
-                                    className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    className="relative block w-full appearance-none rounded-none dark:bg-gray-800 rounded-t-md border dark:border-gray-600  border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-200 placeholder-gray-400 placeholder-gray-700 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     placeholder="Email address"
                                     {...register("userEmail", {required: true, pattern: /^\S+@\S+$/i})}
                                 />
@@ -116,7 +116,7 @@ export default function SignUpRoute() {
                                     type="username"
                                     autoComplete="username"
                                     required
-                                    className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    className="relative block w-full appearance-none rounded-none dark:bg-gray-800 border dark:border-gray-600  border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-200 placeholder-gray-400 placeholder-gray-700 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     placeholder="Username"
                                     {...register("username", {required: true, maxLength: 32})}
                                 />
@@ -131,7 +131,7 @@ export default function SignUpRoute() {
                                     type="password"
                                     autoComplete="current-password"
                                     required
-                                    className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    className="relative block w-full appearance-none rounded-none dark:bg-gray-800 rounded-b-md border dark:border-gray-600  border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-200 placeholder-gray-400 placeholder-gray-700 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     placeholder="Password"
                                     {...register("password", {required: true, maxLength: 32})}
                                 />
@@ -146,7 +146,7 @@ export default function SignUpRoute() {
                                     type="checkbox"
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
-                                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-400 ">
                                     Remember me
                                 </label>
                             </div>

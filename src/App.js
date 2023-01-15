@@ -14,13 +14,20 @@ import {
     TransitionGroup,
     CSSTransition, SwitchTransition
 } from "react-transition-group";
+import {useEffect, useState} from "react";
 
 function App() {
     let location = useLocation();
+    // const [loc, setLoc] = useState(10);
+
+    // useEffect(() => {
+    //     console.log(loc);
+    //     setLoc(loc + 1);
+    // })
 
     return (
-      <div className="isolate bg-white dark:bg-gray-800">
-          <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
+      <div className="isolate bg-white dark:bg-gray-800 flex flex-col min-h-screen">
+          <div className={"absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"}>
               <svg
                   className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
                   viewBox="0 0 1155 678"
@@ -48,20 +55,20 @@ function App() {
               </svg>
           </div>
 
-              <NavbarComponent/>
-                      <Routes>
-                          <Route element={<AnimationLayout />}>
-                              <Route path="/" element={<HomeRoute />} />
-                              <Route path="/signin" element={<SignInRoute />} />
-                              <Route path="/signup" element={<SignUpRoute />} />
-                              <Route path="/upload" element={<UploadRoute />} />
-                              <Route path="/files" element={<FilesRoute />} />
-                              <Route path="/files/:digest" element={<FileDisplayRoute />} />
-                              <Route path="/links" element={<LinksRoute />} />
-                              <Route path="/links/:addr" element={<LinkDisplayRoute />} />
-                              <Route path="*" element={<Func404 />} />
-                          </Route>
-                      </Routes>
+          <NavbarComponent/>
+                  <Routes className="">
+                      <Route element={<AnimationLayout />}>
+                          <Route path="/" element={<HomeRoute />} />
+                          <Route path="/signin" element={<SignInRoute />} />
+                          <Route path="/signup" element={<SignUpRoute />} />
+                          <Route path="/upload" element={<UploadRoute />} />
+                          <Route path="/files" element={<FilesRoute />} />
+                          <Route path="/files/:digest" element={<FileDisplayRoute />} />
+                          <Route path="/links" element={<LinksRoute />} />
+                          <Route path="/links/:addr" element={<LinkDisplayRoute />} />
+                          <Route path="*" element={<Func404 />} />
+                      </Route>
+                  </Routes>
           <FooterComponent/>
       </div>
     );
@@ -85,6 +92,8 @@ function Func404() {
         </section>
     )
 }
+
+
 
 const AnimationLayout = () => {
     const { pathname } = useLocation();

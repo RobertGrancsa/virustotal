@@ -3,6 +3,7 @@ import {useState} from "react";
 import axios from "axios";
 import {useCookies} from "react-cookie";
 import API_URL from "../constants";
+import {useNavigate} from "react-router-dom";
 
 
 export default function UploadlinkComponent() {
@@ -11,8 +12,7 @@ export default function UploadlinkComponent() {
     const [cookies, setCookie] = useCookies(["userToken"]);
 
     const [notification, setNotification] = useState({message: null, isError: null});
-
-
+    let navigate = useNavigate();
 
     const onChangeUrl = (url) => {
         let link = url.target.value
@@ -70,6 +70,11 @@ export default function UploadlinkComponent() {
                     message: res.data,
                     isError: false,
                 })
+
+                setTimeout(function() {
+                    navigate("/links/" + sendData.urlAddress);
+                }, 500);
+
             })
             .catch((error) => {
                 console.log(error);
@@ -84,22 +89,21 @@ export default function UploadlinkComponent() {
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="shadow sm:overflow-hidden sm:rounded-md mb-4">
-
-                <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
+                <div className="space-y-6 bg-white dark:bg-gray-700 px-4 py-5 sm:p-6">
                     <div className="grid grid-cols-3 gap-6">
-                        <div className="col-span-3 sm:col-span-2">
-                            <label htmlFor="company-website" className="block text-sm font-medium text-gray-700">
+                        <div className="col-span-3 sm:col-span-1">
+                            <label htmlFor="company-website" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                                 Website
                             </label>
                             <div className="mt-1 flex rounded-md shadow-sm">
-                        <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
+                        <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-600/30 px-3 text-sm text-gray-500 dark:text-gray-300 ">
                           https://
                         </span>
                                 <input
                                     type="text"
                                     name="company-website"
                                     id="company-website"
-                                    className="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    className="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700/30 dark:focus:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400"
                                     placeholder="www.example.com"
                                     value={formData.url}
                                     onChange={onChangeUrl}
@@ -107,11 +111,11 @@ export default function UploadlinkComponent() {
                             </div>
                         </div>
                     </div>
-                    <p className="mt-2 text-sm text-gray-500">
+                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                         Upload a website that we are going to scan for viruses. URLs are hyperlinked.
                     </p>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <div className="bg-gray-50 px-4 py-3 text-right sm:px-6 dark:bg-gray-700/30">
                     <button
                         type="submit"
                         className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

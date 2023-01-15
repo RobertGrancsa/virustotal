@@ -10,8 +10,8 @@ export default function HomeRoute() {
                 <div className="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
                     <div>
                         <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-                            <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                  <span className="text-gray-600">
+                            <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-900/10 hover:ring-gray-900/20 dark:ring-gray-200/10 dark:hover:ring-gray-200/20">
+                  <span className="text-gray-600 dark:text-gray-300">
                     Implemented a new virus detection algorithm. {' '}
                       <Link to="//random.org" className="font-semibold text-indigo-600">
                       <span className="absolute inset-0" aria-hidden="true" />
@@ -21,12 +21,11 @@ export default function HomeRoute() {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl dark:text-gray-300">
+                            <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl dark:text-gray-200">
                                 Virus Total
                             </h1>
                             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 sm:text-center">
-                                Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt
-                                amet fugiat veniam occaecat fugiat aliqua.
+                                This site scans possibly malicious links and files, and returns a severity level for the current file
                             </p>
                             <div className="mt-8 flex gap-x-4 sm:justify-center">
                                 <Link
@@ -38,11 +37,11 @@ export default function HomeRoute() {
                       &rarr;
                     </span>
                                 </Link>
-                                <Link to="/signin"
-                                    className="inline-block rounded-lg px-4 py-1.5 text-base font-semibold leading-7 text-gray-900 ring-1 ring-gray-900/10 hover:ring-gray-900/20"
+                                <Link to="/signup"
+                                    className="inline-block rounded-lg px-4 py-1.5 text-base font-semibold leading-7 text-gray-900 dark:text-gray-300  ring-1 ring-gray-900/10 hover:ring-gray-900/20 dark:ring-gray-100/10 dark:hover:ring-gray-100/20"
                                 >
                                     Sign Up{' '}
-                                    <span className="text-gray-400" aria-hidden="true">
+                                    <span className="text-gray-400 dark:text-gray-200" aria-hidden="true">
                       &rarr;
                     </span>
                                 </Link>

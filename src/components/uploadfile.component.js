@@ -44,7 +44,6 @@ export default function UploadfileComponent() {
 
         let reader = new FileReader();
         reader.readAsText(selectedFile);
-        // console.log(selectedFile.readAsBinaryString())
 
         reader.onload = function() {
             console.log(reader.result);
@@ -72,7 +71,7 @@ export default function UploadfileComponent() {
                     setTimeout(function() {
                         let digest = sha512(sendData.binData).toUpperCase();
                         navigate("/files/" + digest);
-                    }, 5000);
+                    }, 3000);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -89,18 +88,18 @@ export default function UploadfileComponent() {
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="shadow sm:overflow-hidden sm:rounded-md mb-4">
-                <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
+                <div className="space-y-6 bg-white dark:bg-gray-700 px-4 py-5 sm:p-6">
                     <div className="grid grid-cols-3 gap-6">
                         <div className="col-span-3 sm:col-span-1">
-                            <label htmlFor="company-website" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="company-website" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                 Description
                             </label>
-                            <div className="mt-1 flex rounded-md shadow-sm">
+                            <div className="mt-1 flex rounded-md shadow-sm ">
                                 <input
                                     type="text"
                                     name="company-website"
                                     id="company-website"
-                                    className="block w-full flex-1 rounded-l-md rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    className="block w-full flex-1 rounded-l-md rounded-r-md border-gray-300 dark:border-gray-600 dark:placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700/30 dark:focus:bg-gray-800"
                                     placeholder="File description"
                                     {...register("fileName", { required: true })}
                                 />
@@ -109,29 +108,29 @@ export default function UploadfileComponent() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">File upload</label>
-                        <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-                            <div className="space-y-1 text-center">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">File upload</label>
+                        <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 dark:border-gray-500 px-6 pt-5 pb-6">
+                            <div className="space-y-1 text-center text-gray-700 dark:text-gray-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mx-auto w-14 h-14">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
                                 </svg>
 
-                                <div className="flex text-sm text-gray-600">
+                                <div className="flex text-sm text-gray-600 dark:text-gray-200 dark:bg-gray-700">
                                     <label
                                         htmlFor="file-upload"
                                         className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
                                     >
-                                        <span>Upload a file</span>
-                                        <input onChange={handleFileInput} id="file-upload" name="file-upload" type="file" className="sr-only" />
+                                        <span className="dark:bg-gray-700">Upload a file</span>
+                                        <input onChange={handleFileInput} id="file-upload" name="file-upload" type="file" className="sr-only dark:bg-gray-700" />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>
-                                <p className="text-xs text-gray-500">{selectedFile === null ? "Any EXE, binary file up to 10MB" : "Uploading " + selectedFile.name}</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-300">{selectedFile === null ? "Any EXE, binary file up to 10MB" : "Uploading " + selectedFile.name}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <div className="bg-gray-50 dark:bg-gray-700/30 px-4 py-3 text-right sm:px-6">
                     <button
                         type="submit"
                         className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

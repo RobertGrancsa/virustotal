@@ -88,12 +88,12 @@ export default function LinksRoute() {
 
     return (
         <div className="flex items-center justify-center">
-            <Card className="lg:px-10 md:px-4 pt-5 lg:w-2/3 mt-10 pb-10 md:w-1">
-                <h2 className="px-5 mt-6 text-left text-4xl font-bold tracking-tight text-gray-900">
+            <div className="rounded-md shadow lg:px-10 md:px-4 pt-5 lg:w-2/3 mt-10 pb-10 md:w-1 bg-white dark:bg-gray-800">
+                <h2 className="px-5 mt-6 text-left text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 ">
                     List of urls
                 </h2>
                 { getLinks() }
-            </Card>
+            </div>
         </div>
     )
 }

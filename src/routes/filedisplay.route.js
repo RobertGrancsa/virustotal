@@ -1,10 +1,12 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import fileDownload from "js-file-download";
 import API_URL from "../constants";
 import {Toast} from "flowbite-react";
+import {Button} from "@material-tailwind/react";
+import {useCookies} from "react-cookie";
 
 function getDateFormat(time) {
     const date = new Date(time);
@@ -15,6 +17,8 @@ function getDateFormat(time) {
 export default function FileDisplayRoute() {
     const params = useParams();
     const [file, setFile] = useState(null);
+    const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (file === null) {
@@ -28,6 +32,25 @@ export default function FileDisplayRoute() {
                 })
         }
     })
+
+    const deleteElem = () => {
+        console.log("Deleting");
+        const deleteFile = {
+            userEmail: cookies.userToken.email,
+            fileSHA512Digest: file.digest
+        }
+
+        axios.post("http://" + API_URL + "/api/v1/delete_file", deleteFile, {headers: {
+                'AccessToken' : cookies.userToken.token,
+            }})
+            .then(res => {
+                console.log(res.data);
+                navigate("/");
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 
     const download = () => {
         let fileString = new TextDecoder().decode(Uint8Array.from(file.binData).buffer);
@@ -62,46 +85,63 @@ export default function FileDisplayRoute() {
         }
 
         return <>
-            <div className="overflow-hidden bg-white shadow sm:rounded-lg">
-                <div className="px-4 py-5 sm:px-6">
-                    <h3 className="text-lg font-medium leading-6 text-gray-900">File Information</h3>
-                    <p className="mt-1 max-w-2xl text-sm text-gray-500">Details about the uploaded file.</p>
+            <div className="overflow-hidden bg-white dark:bg-gray-700 shadow sm:rounded-lg
+            ">
+                <div className="px-4 py-5 sm:px-6 grid grid-cols-5">
+                    <dt className="">
+                        <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">File Information</h3>
+                        <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-300">Details about the uploaded file.</p>
+                    </dt>
+                    { cookies.userToken !== undefined && <dd className="col-start-5 col-end-5">
+                        <div className="rounded-md" onClick={deleteElem}>
+                            <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                                <div className="flex w-0 flex-1 items-center">
+                                </div>
+                                <a className="ml-4 flex-shrink-0">
+                                    <Button type="button"
+                                            className="font-medium text-gray-50 hover:text-gray-200 w-full bg-red-500">
+                                        Delete
+                                    </Button>
+                                </a>
+                            </li>
+                        </div>
+                    </dd>}
                 </div>
-                <div className="border-t border-gray-200">
+                <div className="border-t border-gray-200 dark:border-gray-600">
                     <dl>
-                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">Filename</dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{file.fileName}</dd>
+                        <div className="bg-gray-50 dark:bg-gray-800/30 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt className="text-sm font-medium text-gray-500 dark:text-gray-300">Filename</dt>
+                            <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:col-span-2 sm:mt-0">{file.fileName}</dd>
                         </div>
-                        <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">Uploaded by</dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{file.userId}</dd>
+                        <div className="bg-white dark:bg-gray-800/60 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt className="text-sm font-medium text-gray-500 dark:text-gray-300">Uploaded by</dt>
+                            <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:col-span-2 sm:mt-0">{file.userId}</dd>
                         </div>
-                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">Date added</dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{getDateFormat(file.dateAdded)}</dd>
+                        <div className="bg-gray-50 dark:bg-gray-800/30 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt className="text-sm font-medium text-gray-500 dark:text-gray-300">Date added</dt>
+                            <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:col-span-2 sm:mt-0">{getDateFormat(file.dateAdded)}</dd>
                         </div>
-                        <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">Security level</dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{file.securityLevel}</dd>
+                        <div className="bg-white dark:bg-gray-800/60 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt className="text-sm font-medium text-gray-500 dark:text-gray-300">Security level</dt>
+                            <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:col-span-2 sm:mt-0">{file.securityLevel}</dd>
                         </div>
-                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">Verdict</dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{file.securityLevel.valueOf() < 5 ? "Site is safe to access" : "Beware when opening this site"}</dd>
+                        <div className="bg-gray-50 dark:bg-gray-800/30 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt className="text-sm font-medium text-gray-500 dark:text-gray-300">Verdict</dt>
+                            <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:col-span-2 sm:mt-0">{file.securityLevel.valueOf() < 5 ? "Site is safe to access" : "Beware when opening this site"}</dd>
                         </div>
-                        <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-500">Attachments</dt>
-                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                <ul role="list" className="divide-y divide-gray-200 rounded-md border border-gray-200">
+                        <div className="bg-white dark:bg-gray-800/60 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt className="text-sm font-medium text-gray-500 dark:text-gray-300">Verdict</dt>
+                            <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100 sm:col-span-2 sm:mt-0">
+                                <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-500 rounded-md border border-gray-200 dark:border-gray-500">
                                     <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                         <div className="flex w-0 flex-1 items-center">
                                             <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                             <span className="ml-2 w-0 flex-1 truncate">{file.fileName}</span>
                                         </div>
                                         <div className="ml-4 flex-shrink-0">
-                                            <a onClick={download} className="font-medium text-indigo-600 hover:text-indigo-500">
+                                            <button onClick={download} className="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">
                                                 Download
-                                            </a>
+                                            </button>
                                         </div>
                                     </li>
                                 </ul>

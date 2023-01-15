@@ -31,6 +31,32 @@ export default function NavbarComponent() {
     const handleOpen = () => setOpen(!open);
     let nav;
 
+    const darkMode = () => {
+
+        // toggle icons inside button
+
+        // if set via local storage previously
+        if (localStorage.getItem('color-theme')) {
+            if (localStorage.getItem('color-theme') === 'light') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            }
+
+            // if NOT set via local storage previously
+        } else {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        }
+    };
+
     if (cookies.userToken === undefined) {
         nav = [
             { name: 'Home', href: '/' },
@@ -70,9 +96,9 @@ export default function NavbarComponent() {
         <div className="px-6 pt-6 lg:px-8">
             <Fragment>
             <div>
-                    <Dialog open={open} handler={handleOpen}>
-                        <DialogHeader>Are you sure you want to delete the account?</DialogHeader>
-                        <DialogBody divider>
+                    <Dialog open={open} handler={handleOpen} className="dark:bg-gray-800">
+                        <DialogHeader className="dark:text-gray-200">Are you sure you want to delete the account?</DialogHeader>
+                        <DialogBody  className="dark:text-gray-300">
                             This action is definitive and you can't go back. Please confirm that you want to delete this account!
                         </DialogBody>
                         <DialogFooter>
@@ -100,7 +126,7 @@ export default function NavbarComponent() {
                     <div className="flex lg:hidden">
                         <button
                             type="button"
-                            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-400"
                             onClick={() => setMobileMenuOpen(true)}
                         >
                             <span className="sr-only">Open main menu</span>
@@ -112,18 +138,24 @@ export default function NavbarComponent() {
                             <NavLink
                                 to={item.href}
                                 style={({ isActive }) =>
-                                    ({color: isActive ? '#000' : '#606466'})
+                                    ({color: isActive ? '#4B5563' : '#9CA3AF'})
                                 }
                                 className="font-semibold text-gray-900 hover:text-gray-900"
                             >
                                 {item.name}
                             </NavLink>
                         ))}
+                        <button
+                            className="font-semibold text-gray-400 hover:text-gray-600"
+                            onClick={darkMode}
+                        >
+                            Dark Mode
+                        </button>
                     </div>
 
                     { cookies.userToken === undefined && <div className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-end">
                         <Link to="/signin"
-                              className="inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
+                              className="inline-block rounded-lg dark:text-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20 dark:ring-gray-200/10 dark:hover:ring-gray-200/20"
                         >
                             Log in
                         </Link>
@@ -208,7 +240,7 @@ export default function NavbarComponent() {
                                 {cookies.userToken === undefined && <div className="py-6">
                                     <Link to="/signin"
                                           onClick={() => setMobileMenuOpen(false)}
-                                          className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
+                                          className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10 dark:text-gray-400 "
                                     >
                                         Log in
                                     </Link>

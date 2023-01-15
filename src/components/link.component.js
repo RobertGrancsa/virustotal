@@ -51,7 +51,7 @@ export default function LinkComponent({element, removeFunc}) {
     return (
         <div className="lg:flex lg:items-center lg:justify-between m-5">
             <div className="min-w-0 flex-1">
-                <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                <h2 className="text-2xl font-bold leading-7 text-gray-900 dark:text-gray-200  sm:truncate sm:text-3xl sm:tracking-tight">
                     {element.addr}
                 </h2>
                 <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
@@ -76,9 +76,9 @@ export default function LinkComponent({element, removeFunc}) {
         <span className="hidden sm:block">
           <button
               type="button"
-              className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="inline-flex items-center rounded-md border dark:text-gray-200 border-gray-300 dark:border-gray-900 bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
-            <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+            <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500 dark:text-gray-200" aria-hidden="true" />
             Edit
           </button>
         </span>
@@ -86,9 +86,9 @@ export default function LinkComponent({element, removeFunc}) {
                 <span className="ml-3 hidden sm:block">
           <Link
               to={"/links/" + element.addr}
-              className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="inline-flex items-center rounded-md border dark:text-gray-200 border-gray-300 dark:border-gray-900 bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
-            <LinkIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+            <LinkIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500 dark:text-gray-200" aria-hidden="true" />
             View
           </Link>
         </span>
